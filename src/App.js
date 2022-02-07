@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import react from "react";
+import { marked } from "marked";
 
 function App() {
+  const [editorText, setEditorText] = react.useState("");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <header className="header-text">Editor</header>
+        <textarea
+          className="text-box"
+          onChange={(e) => setEditorText(e.target.value)}
+          id="editor"
+          value={editorText}
+        ></textarea>
+      </div>
+      <div>
+        <header className="header-text">Previewer</header>
+        <div
+          className="text-box"
+          id="preview"
+          dangerouslySetInnerHTML={{
+            __html: marked.parse(editorText, {
+              breaks: true,
+              gfm: true,
+            }),
+          }}
+        />
+      </div>
     </div>
   );
 }
